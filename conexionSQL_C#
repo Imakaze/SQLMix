@@ -1,0 +1,21 @@
+using System;
+using System.Data.SqlClient;
+
+//Programa básico para conectar con una base MS SQL Server.
+namespace SQLCONEXIONfinal
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            SqlConnection sqlCon = new SqlConnection(@"Data Source =DESKTOP-KCD6R0J\SQLEXPRESS;" 
+            + "Initial Catalog = PizzeriaFina; Integrated Security = True");
+                sqlCon.Open();
+                   Console.WriteLine("Conexión abierta.");
+                    Console.ReadKey();
+                sqlCon.Close();
+                   Console.WriteLine("Conexión cerrada.");
+                    Console.ReadKey();
+        } 
+    }
+}
