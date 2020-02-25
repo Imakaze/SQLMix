@@ -1,0 +1,48 @@
+using System;
+using System.Text;
+using System.Data.SqlClient;
+
+/*Este código se conecta a un servidor de SQL Server, se conecta
+ *a la base de datos llamada "PizzeriaFina" usando seguridad integrada
+ * e introduce el valor "Chorizo" en la tabla "ingredientes"
+ */
+
+namespace SQLCONEXIONfinal
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            SqlConnection sqlCon = new SqlConnection(@"Data Source =DESKTOP-KCD6R0J\SQLEXPRESS;" 
+            + "Initial Catalog = PizzeriaFina; Integrated Security = True");
+                sqlCon.Open();
+                   Console.WriteLine("Conexión abierta.");
+                    Console.ReadKey();
+
+            StringBuilder sb = new StringBuilder();
+            string sql;
+
+            Console.Write("Introduciendo una nueva fila en la Base de Datos. Presiona para continuar...");
+            Console.ReadKey(true);
+            sb.Clear();
+            sb.Append("INSERT ingredientes (ID_Ing, Nom_Ing, precio) ");
+            sb.Append("VALUES (@ID_Ing, @Nom_Ing, @precio);");
+            sql = sb.ToString();
+
+            using (SqlCommand command = new SqlCommand(sql,sqlCon))
+            {
+                command.Parameters.AddWithValue("@ID_Ing", "8");
+                command.Parameters.AddWithValue("@Nom_Ing", "Chorizo");
+                command.Parameters.AddWithValue("@precio", "3.4");
+                int rowsAffected = command.ExecuteNonQuery();
+                Console.WriteLine(rowsAffected + " columna(s) insertada(s)");
+                Console.WriteLine("Presiona cualquier tecla para salir.");
+                Console.ReadKey();
+
+            }
+            sqlCon.Close();
+                Console.WriteLine("Conexión cerrada. Adiós.");
+                Console.ReadKey();
+        }
+    }
+}
